@@ -1,0 +1,290 @@
+/* ==========================================================================
+   1. VARIÁVEIS DO SISTEMA (DESIGN SYSTEM)
+   ========================================================================== */
+:root {
+    /* Paleta Ecológica */
+    --clr-brand: #2e7d32;          /* Verde Principal (Floresta) */
+    --clr-brand-hover: #1b5e20;    /* Verde Escuro */
+    --clr-bg-light: #e8f5e9;       /* Verde Claro (Fundo de Destaques) */
+    --clr-border: #a5d6a7;         /* Verde Suave para divisores */
+    --clr-canvas: #faf9f6;         /* Superfície Base (Tom de Areia Leve) */
+    --clr-surface: #ffffff;        /* Cards e Containers */
+    
+    /* Tipografia e Contraste */
+    --clr-text-main: #2c3e50;      /* Texto de Altíssimo Contraste */
+    --clr-text-muted: #576574;     /* Legendas e Textos Secundários */
+    
+    /* Semântica de Impacto (Acessível) */
+    --clr-alert: #d35400;          /* Laranja de Alerta (Emissões) */
+    --clr-alert-bg: #fffaf5;
+    --clr-critical: #c0392b;       /* Vermelho Crítico (Tempo de Recuperação) */
+    --clr-critical-bg: #fff5f5;
+    
+    /* Estrutura */
+    --radius-md: 8px;
+    --radius-sm: 6px;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+    --transition-fast: 0.2s ease;
+}
+
+/* ==========================================================================
+   2. RESETS E ACESSIBILIDADE BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--clr-canvas);
+    color: var(--clr-text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Foco Visível para Navegação por Teclado */
+input:focus-visible, 
+select:focus-visible, 
+button:focus-visible {
+    outline: 3px solid var(--clr-brand);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   3. ARQUITETURA DE LAYOUT (COMPONENTES)
+   ========================================================================== */
+.header-principal {
+    text-align: center;
+    padding: 4rem 1rem 3.5rem;
+    background: linear-gradient(180deg, var(--clr-bg-light) 0%, rgba(232,245,233,0.3) 100%);
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.header-principal h1 {
+    font-size: 2.8rem;
+    color: var(--clr-brand);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.header-principal p {
+    color: var(--clr-text-muted);
+    font-size: 1.15rem;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 850px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+}
+
+section {
+    background: var(--clr-surface);
+    padding: 2.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+section h2 {
+    color: var(--clr-brand);
+    margin-bottom: 1.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--clr-bg-light);
+    padding-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   4. FORMULÁRIOS INTELIGENTES
+   ========================================================================== */
+.grupo-input {
+    margin-bottom: 1.5rem;
+}
+
+.grupo-input label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.grupo-input select {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--clr-surface);
+    color: var(--clr-text-main);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.grupo-input select:focus {
+    border-color: var(--clr-brand);
+    box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+/* Estilização dos Grupos de Modelos Injetados pelo HTML */
+.grupo-input select optgroup {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--clr-brand);
+    background-color: var(--clr-surface);
+}
+
+.grupo-input select option {
+    color: var(--clr-text-main);
+    font-weight: normal;
+    padding: 0.5rem;
+}
+
+.grupo-input select:disabled {
+    background-color: #f1f2f6;
+    border-color: #dcdde1;
+    color: var(--clr-text-muted);
+    cursor: not-allowed;
+}
+
+#btn-calcular {
+    width: 100%;
+    background-color: var(--clr-brand);
+    color: var(--clr-surface);
+    border: none;
+    padding: 1.1rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform 0.1s ease;
+}
+
+#btn-calcular:hover:not(:disabled) {
+    background-color: var(--clr-brand-hover);
+}
+
+#btn-calcular:active {
+    transform: scale(0.99);
+}
+
+/* ==========================================================================
+   5. COMPONENTES DE FEEDBACK VISUAL (MUDANÇA DE ESTADOS VIA JS)
+   ========================================================================== */
+.grade-resultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.card-resultado {
+    padding: 1.75rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--clr-canvas);
+    border-top: 4px solid var(--clr-border);
+    transition: transform var(--transition-fast);
+}
+
+.card-resultado h3 {
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.card-resultado p {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--clr-text-main);
+    word-break: break-word;
+}
+
+.card-resultado small {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--clr-text-muted);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Estados Dinâmicos de Alerta Climático */
+.card-resultado.Alerta {
+    border-top-color: var(--clr-alert);
+    background-color: var(--clr-alert-bg);
+}
+.card-resultado.Alerta p {
+    color: var(--clr-alert);
+}
+
+.card-resultado.Urgente {
+    border-top-color: var(--clr-critical);
+    background-color: var(--clr-critical-bg);
+}
+.card-resultado.Urgente p {
+    color: var(--clr-critical);
+}
+
+/* ==========================================================================
+   6. MATRIZ DE SOLUÇÕES (ENGENHARIA REVERSA DE IMPACTO)
+   ========================================================================== */
+.painel-solucoes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.solucao-item {
+    padding: 1.75rem;
+    background-color: var(--clr-bg-light);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--clr-border);
+}
+
+.solucao-item h3 {
+    color: var(--clr-brand-hover);
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.solucao-item p {
+    font-size: 0.95rem;
+    color: var(--clr-text-main);
+}
+
+.solucao-item strong {
+    display: block;
+    font-size: 1.8rem;
+    color: var(--clr-brand);
+    font-weight: 800;
+    margin-top: 0.75rem;
+}
+
+.footer-principal {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--clr-text-muted);
+    margin-top: 5rem;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ==========================================================================
+   7. CLASSES UTILITÁRIAS E GESTÃO DE ESTADO (JS)
+   ========================================================================== */
+/* Controla a exibição das seções após o processamento dos cálculos */
+.escondido {
+    display: none !important;
+}
+
+/* Responsividade Adaptativa */
+@media (max-width: 600px) {
+    .header-principal h1 { font-size: 2.2rem; }
+    section { padding: 1.75rem; }
+    .grade-resultados { grid-template-columns: 1fr; }
+}

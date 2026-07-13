@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EcoTrip - Calcule o impacto ambiental, emissão de CO2 e tempo de recuperação do planeta baseado no seu meio de transporte.">
+    <title>EcoTrip | Calculadora de Impacto Ambiental e Pegada de Carbono</title>
+    <link rel="stylesheet" href="ecotrip.css">
+</head>
+<body>
+
+    <header class="header-principal">
+        <h1>EcoTrip</h1>
+        <p>Simulador avançado de engenharia climática. Meça a pegada de carbono da sua viagem e descubra o tempo de resposta da natureza.</p>
+    </header>
+
+    <main class="container">
+        <section id="secao-inputs" aria-labelledby="titulo-cadastro">
+            <h2 id="titulo-cadastro">Planeje sua Rota Sustentável</h2>
+            <form id="form-calculadora" novalidate>
+                
+                <div class="grupo-input">
+                    <label for="selecao-rota">Origem ➔ Destino Comercial:</label>
+                    <select id="selecao-rota" name="rota" required aria-required="true">
+                        <option value="" disabled selected>Selecione uma rota oficial...</option>
+                        <option value="rj-sp" data-distancia="435">Rio de Janeiro (RJ) ➔ São Paulo (SP) | 435 km</option>
+                        <option value="sp-bh" data-distancia="586">São Paulo (SP) ➔ Belo Horizonte (MG) | 586 km</option>
+                        <option value="df-go" data-distancia="209">Brasília (DF) ➔ Goiânia (GO) | 209 km</option>
+                        <option value="ba-se" data-distancia="320">Salvador (BA) ➔ Aracaju (SE) | 320 km</option>
+                        <option value="cur-flo" data-distancia="300">Curitiba (PR) ➔ Florianópolis (SC) | 300 km</option>
+                    </select>
+                </div>
+
+                <div class="grupo-input">
+                    <label for="selecao-veiculo">Categoria de Transporte:</label>
+                    <select id="selecao-veiculo" name="veiculo" required aria-required="true">
+                        <option value="" disabled selected>Selecione a categoria...</option>
+                        <option value="carro">Carro</option>
+                        <option value="moto">Motocicleta</option>
+                        <option value="caminhao">Caminhão</option>
+                        <option value="onibus">Ônibus</option>
+                        <option value="trem_metro">Trem / Metrô</option>
+                        <option value="aviao">Avião</option>
+                    </select>
+                </div>
+
+                <div class="grupo-input">
+                    <label for="selecao-modelo">Especificação técnica do Modelo:</label>
+                    <select id="selecao-modelo" name="modelo" required aria-required="true" disabled>
+                        <option value="" disabled selected>Aguardando categoria de transporte...</option>
+                        
+                        <optgroup label="Carro" data-grupo="carro">
+                            <option value="carro-popular" data-emissao="130" data-velocidade="85">Carro Popular 1.0 (Flex/Gasolina)</option>
+                            <option value="carro-suv" data-emissao="210" data-velocidade="85">Carro SUV / Utilitário (Alto Consumo)</option>
+                            <option value="carro-eletrico" data-emissao="35" data-velocidade="85">Carro Elétrico (Matriz Energética BR)</option>
+                        </optgroup>
+
+                        <optgroup label="Motocicleta" data-grupo="moto">
+                            <option value="moto-160" data-emissao="65" data-velocidade="75">Motocicleta até 160cc (Urbana)</option>
+                            <option value="moto-600" data-emissao="115" data-velocidade="90">Motocicleta Alta Cilindrada (Estradeira)</option>
+                            <option value="moto-eletrica" data-emissao="15" data-velocidade="60">Motocicleta Elétrica</option>
+                        </optgroup>
+
+                        <optgroup label="Caminhão" data-grupo="caminhao">
+                            <option value="caminhao-toco" data-emissao="750" data-velocidade="70">Caminhão Toco (Semipesado Baú)</option>
+                            <option value="caminhao-carreta" data-emissao="1200" data-velocidade="70">Caminhão Carreta (Pesado/Articulado)</option>
+                            <option value="caminhao-vuc" data-emissao="480" data-velocidade="50">VUC (Veículo Urbano de Carga)</option>
+                        </optgroup>
+
+                        <optgroup label="Ônibus" data-grupo="onibus">
+                            <option value="onibus-diesel" data-emissao="95" data-velocidade="70">Ônibus Rodoviário Convencional (Coletivo)</option>
+                            <option value="onibus-leito" data-emissao="120" data-velocidade="75">Ônibus Executivo Leito (Coletivo)</option>
+                            <option value="onibus-eletrico" data-emissao="12" data-velocidade="50">Ônibus Elétrico Urbano (Coletivo)</option>
+                        </optgroup>
+
+                        <optgroup label="Trem / Metrô" data-grupo="trem_metro">
+                            <option value="trem-urbano" data-emissao="28" data-velocidade="45">Metrô / Trem de Subúrbio</option>
+                            <option value="trem-interferro" data-emissao="33" data-velocidade="90">Trem de Passageiros Intercidades</option>
+                            <option value="trem-bala" data-emissao="18" data-velocidade="220">Trem de Alta Velocidade (Malha Elétrica)</option>
+                        </optgroup>
+
+                        <optgroup label="Avião" data-grupo="aviao">
+                            <option value="aviao-comercial" data-emissao="150" data-velocidade="800">Avião Comercial Regular (Por Passageiro)</option>
+                            <option value="aviao-regional" data-emissao="230" data-velocidade="600">Avião Turboélice Regional</option>
+                            <option value="aviao-jatinho" data-emissao="1800" data-velocidade="750">Jato Executivo Privado (Crítico)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <button type="submit" id="btn-calcular">Simular Impacto Ambiental</button>
+            </form>
+        </section>
+
+        <section id="secao-resultados" class="escondido" aria-live="polite">
+            <h2>Diagnóstico do Impacto Gerado</h2>
+            
+            <div class="grade-resultados">
+                <article class="card-resultado">
+                    <h3>Duração Estimada</h3>
+                    <p><time id="resultado-tempo">00h 00min</time></p>
+                </article>
+
+                <article class="card-resultado Alerta">
+                    <h3>Massa de CO₂ Despejada</h3>
+                    <p id="resultado-co2">0.00 kg</p>
+                    <small id="efeito-descricao">Gases de efeito estufa injetados na troposfera local.</small>
+                </article>
+
+                <article class="card-resultado Urgente">
+                    <h3>Tempo de Recuperação Atmosférica</h3>
+                    <p id="resultado-tempo-recuperacao">0 anos</p>
+                    <small>Ciclo necessário para a biomecânica da Terra reabsorver este volume de carbono.</small>
+                </article>
+            </div>
+        </section>
+
+        <section id="secao-solucoes" class="escondido">
+            <h2>Engenharia de Mitigação & Soluções</h2>
+            
+            <div class="painel-solucoes">
+                <div class="solucao-item">
+                    <h3>Neutralização via Reflorestamento</h3>
+                    <p>Ativos florestais obrigatórios para captura anual contínua do carbono emitido:</p>
+                    <strong id="solucao-arvores">0 Árvores Nativas</strong>
+                </div>
+
+                <div class="solucao-item">
+                    <h3>Otimização de Matriz de Transporte</h3>
+                    <p id="solucao-comparativo">Aguardando telemetria dos dados da rota para sugerir alternativas...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-principal">
+        <p><small>&copy; 2026 EcoTrip. Protocolo de Engenharia Climática e Arquitetura de Dados.</small></p>
+    </footer>
+<script src="routes-data.js"></script>
+<script src="config.js"></script>
+<script src="calculator.js"></script>
+<script src="ui.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
